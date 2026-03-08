@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Wave Laundry Shop - Lumbia, Cagayan de Oro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        wave: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        fresh: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .blob {
+            position: absolute;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 10s infinite;
+        }
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        .auth-input {
+            transition: all 0.3s ease;
+        }
+        .auth-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -5px rgba(14, 165, 233, 0.4);
+        }
+        .map-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .wave-bg {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%230ea5e9' fill-opacity='0.1' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-wave-500 selection:text-white">
+
+    <!-- Background Elements -->
+    <div class="blob bg-cyan-300 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
+    <div class="blob bg-blue-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animation-delay-2000"></div>
+    <div class="blob bg-teal-300 w-96 h-96 rounded-full -bottom-32 left-20 mix-blend-multiply animation-delay-4000"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-12 h-12 bg-gradient-to-br from-wave-500 to-wave-700 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg shadow-wave-500/30">
+                        <i class="fa-solid fa-water"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tight text-slate-900 block leading-none">Fresh Wave</span>
+                        <span class="text-xs text-wave-600 font-medium">Laundry Shop</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#services" class="text-slate-600 hover:text-wave-600 font-medium transition-colors">Services</a>
+                    <a href="#location" class="text-slate-600 hover:text-wave-600 font-medium transition-colors">Location</a>
+                    <a href="#pricing" class="text-slate-600 hover:text-wave-600 font-medium transition-colors">Pricing</a>
+                    <a href="#tracking" class="text-slate-600 hover:text-wave-600 font-medium transition-colors">Track Order</a>
+                    
+                    <!-- Auth Buttons (Visible when logged out) -->
+                    <div id="auth-buttons" class="flex items-center gap-3">
+                        <button onclick="openAuthModal('login')" class="text-slate-600 hover:text-wave-600 font-medium transition-colors px-4 py-2">Log In</button>
+                        <button onclick="openAuthModal('signup')" class="btn-primary text-white px-6 py-2.5 rounded-full font-medium shadow-lg">
+                            Sign Up
+                        </button>
+                    </div>
+                    
+                    <!-- User Menu (Visible when logged in) -->
+                    <div id="user-menu" class="hidden items-center gap-3">
+                        <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer" onclick="showUserDropdown()">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-wave-500 to-wave-700 flex items-center justify-center text-white font-bold text-sm" id="user-avatar">
+                                JD
+                            </div>
+                            <div class="hidden lg:block text-left">
+                                <p class="text-sm font-bold text-slate-900 leading-none" id="user-name">John Doe</p>
+                                <p class="text-xs text-slate-500 mt-0.5">My Account</p>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs"></i>
+                        </div>
+                        
+                        <!-- User Dropdown -->
+                        <div id="user-dropdown" class="hidden absolute top-20 right-8 w-64 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 animate-fade-in">
+                            <div class="px-4 py-3 border-b border-slate-100">
+                                <p class="text-sm font-bold text-slate-900" id="dropdown-name">John Doe</p>
+                                <p class="text-xs text-slate-500" id="dropdown-email">john@example.com</p>
+                            </div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-slate-700 text-sm">
+                                <i class="fa-solid fa-user text-wave-500"></i> Profile
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-slate-700 text-sm">
+                                <i class="fa-solid fa-clock-rotate-left text-wave-500"></i> Order History
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-slate-700 text-sm">
+                                <i class="fa-solid fa-gear text-wave-500"></i> Settings
+                            </a>
+                            <div class="border-t border-slate-100 mt-2 pt-2">
+                                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 text-red-600 text-sm font-medium">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:hidden flex items-center gap-3">
+                    <div id="mobile-user-avatar-container" class="hidden">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-wave-500 to-wave-700 flex items-center justify-center text-white font-bold text-sm" id="mobile-user-avatar">
+                            JD
+                        </div>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-wave-600 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel absolute w-full shadow-2xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#services" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:text-wave-600 hover:bg-wave-50 transition-colors">Services</a>
+                <a href="#location" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:text-wave-600 hover:bg-wave-50 transition-colors">Location</a>
+                <a href="#pricing" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:text-wave-600 hover:bg-wave-50 transition-colors">Pricing</a>
+                <a href="#tracking" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:text-wave-600 hover:bg-wave-50 transition-colors">Track Order</a>
+                
+                <div id="mobile-auth-section" class="pt-4 border-t border-slate-200 mt-4 space-y-3">
+                    <button onclick="openAuthModal('login')" class="w-full text-center py-3 text-slate-600 font-medium hover:text-wave-600 transition-colors">Log In</button>
+                    <button onclick="openAuthModal('signup')" class="w-full btn-primary text-white px-6 py-3 rounded-xl font-medium shadow-lg">Sign Up</button>
+                </div>
+                
+                <div id="mobile-user-section" class="hidden pt-4 border-t border-slate-200 mt-4">
+                    <div class="px-4 py-3 bg-wave-50 rounded-xl mb-3">
+                        <p class="font-bold text-slate-900" id="mobile-menu-name">John Doe</p>
+                        <p class="text-sm text-slate-600" id="mobile-menu-email">john@example.com</p>
+                    </div>
+                    <a href="#" class="block px-4 py-3 rounded-xl text-slate-700 hover:bg-wave-50">Profile</a>
+                    <a href="#" class="block px-4 py-3 rounded-xl text-slate-700 hover:bg-wave-50">Order History</a>
+                    <button onclick="logout()" class="w-full mt-3 text-red-600 font-medium py-3 rounded-xl hover:bg-red-50 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden wave-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-wave-100 text-wave-700 font-semibold text-sm shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-wave-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-wave-500"></span>
+                        </span>
+                        Now Open in Lumbia, CDO
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-slate-900">
+                        Fresh Laundry <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-wave-600 to-cyan-500">Made Simple.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Located at F. Delima St, Lumbia, Cagayan de Oro City. We provide premium wash, dry, and fold services with free pickup and delivery within the city.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button onclick="openBookingModal()" class="px-8 py-4 btn-primary text-white rounded-full font-semibold shadow-xl flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calendar-check"></i> Book Pickup
+                        </button>
+                        <a href="#location" class="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-full font-semibold shadow-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-location-dot"></i> Visit Us
+                        </a>
+                    </div>
+                    <div class="pt-8 flex items-center justify-center lg:justify-start gap-8 text-slate-500">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-fresh-500"></i>
+                            <span class="text-sm font-medium">Same Day Service</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-fresh-500"></i>
+                            <span class="text-sm font-medium">Free Delivery</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-fresh-500"></i>
+                            <span class="text-sm font-medium">Eco-Friendly</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative lg:h-[600px] flex items-center justify-center">
+                    <div class="relative w-full max-w-lg aspect-square">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-wave-200 to-cyan-200 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Fresh Wave Laundry" class="relative z-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-all duration-500 object-cover h-full w-full border-4 border-white">
+                        
+                        <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl z-20 animate-float border border-slate-100 hidden md:block">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-fresh-100 flex items-center justify-center text-fresh-600 text-xl">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 font-semibold uppercase">Trusted By</p>
+                                    <p class="text-xl font-bold text-slate-800">1000+ Customers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-wave-600 font-semibold tracking-wide uppercase text-sm mb-2">Visit Our Shop</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Fresh Wave Laundry Shop - Lumbia</h3>
+                <p class="text-slate-600">Conveniently located on F. Delima Street. Drop by or schedule a pickup!</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Shop Info -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-gradient-to-br from-wave-50 to-cyan-50 p-8 rounded-3xl border border-wave-100">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 bg-wave-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-wave-500/30">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Main Branch</h4>
+                                <p class="text-wave-600 font-medium">Lumbia, CDO</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-location-dot text-wave-500 mt-1"></i>
+                                <div>
+                                    <p class="font-medium text-slate-900">Address</p>
+                                    <p class="text-slate-600 text-sm">F. Delima St, Lumbia,<br>Cagayan de Oro City, 9000<br>Misamis Oriental, Philippines</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-clock text-wave-500 mt-1"></i>
+                                <div>
+                                    <p class="font-medium text-slate-900">Business Hours</p>
+                                    <p class="text-slate-600 text-sm">Mon - Sat: 7:00 AM - 7:00 PM<br>Sunday: 8:00 AM - 5:00 PM</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-phone text-wave-500 mt-1"></i>
+                                <div>
+                                    <p class="font-medium text-slate-900">Contact</p>
+                                    <p class="text-slate-600 text-sm">+63 912 345 6789<br>freshwave.lumbia@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-wave-200">
+                            <div class="flex items-center gap-2 text-fresh-600 font-medium mb-3">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Currently Open</span>
+                            </div>
+                            <button onclick="openBookingModal()" class="w-full btn-primary text-white py-3 rounded-xl font-bold shadow-lg">
+                                Schedule Pickup
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl text-center">
+                            <i class="fa-solid fa-truck-fast text-wave-500 text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-900">Free Delivery</p>
+                            <p class="text-xs text-slate-500">Within 5km radius</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl text-center">
+                            <i class="fa-solid fa-stopwatch text-wave-500 text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-900">Express Service</p>
+                            <p class="text-xs text-slate-500">4-hour rush available</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map -->
+                <div class="lg:col-span-3">
+                    <div class="h-full min-h-[400px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white relative map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.1234567890123!2d124.12345678901234!3d8.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDcnMjQuNCJOIDEyNMKwMDcnMjQuNCJF!5e0!3m2!1sen!2sph!4v1234567890123!5m2!1sen!2sph" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; filter: grayscale(0.1) contrast(1.1);" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-xl p-4 shadow-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-wave-500 rounded-lg flex items-center justify-center text-white">
+                                    <i class="fa-solid fa-map-pin"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-slate-900">Fresh Wave Laundry Shop</p>
+                                    <p class="text-xs text-slate-500">F. Delima St, Lumbia, CDO</p>
+                                </div>
+                                <a href="https://maps.google.com/?q=F.+Delima+St,+Lumbia,+Cagayan+de+Oro" target="_blank" class="px-4 py-2 bg-wave-100 text-wave-700 rounded-lg text-sm font-medium hover:bg-wave-200 transition-colors">
+                                    Open Maps
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-wave-600 font-semibold tracking-wide uppercase text-sm mb-2">Our Services</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Quality Care for Your Garments</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card bg-white rounded-2xl p-6 border border-slate-100 relative overflow-hidden group cursor-pointer" onclick="selectService('wash')">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4 relative z-10 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-soap"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Wash & Fold</h4>
+                    <p class="text-slate-500 text-sm mb-4">Regular laundry service with premium detergent and fabric softener.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-wave-600 font-bold">₱45/kg</span>
+                        <span class="text-xs text-slate-400">~24 hrs</span>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-2xl p-6 border border-slate-100 relative overflow-hidden group cursor-pointer" onclick="selectService('dry')">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4 relative z-10 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-suitcase"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Dry Cleaning</h4>
+                    <p class="text-slate-500 text-sm mb-4">Professional care for delicate fabrics, suits, and formal wear.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-wave-600 font-bold">₱180/item</span>
+                        <span class="text-xs text-slate-400">~48 hrs</span>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-2xl p-6 border border-slate-100 relative overflow-hidden group cursor-pointer" onclick="selectService('iron')">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-4 relative z-10 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Press & Iron</h4>
+                    <p class="text-slate-500 text-sm mb-4">Crisp, wrinkle-free finishing for your office and casual wear.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-wave-600 font-bold">₱35/item</span>
+                        <span class="text-xs text-slate-400">~12 hrs</span>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-2xl p-6 border border-slate-100 relative overflow-hidden group cursor-pointer" onclick="selectService('express')">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-4 relative z-10 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Express Rush</h4>
+                    <p class="text-slate-500 text-sm mb-4">4-hour super rush service for urgent laundry needs.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-wave-600 font-bold">₱90/kg</span>
+                        <span class="text-xs text-slate-400">~4 hrs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Calculator -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-wave-600 font-semibold tracking-wide uppercase text-sm mb-2">Pricing Calculator</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Estimate Your Laundry Cost</h3>
+            </div>
+            
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-wave-500 rounded-full mix-blend-overlay filter blur-3xl opacity-20"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-fresh-500 rounded-full mix-blend-overlay filter blur-3xl opacity-20"></div>
+                
+                <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm text-slate-400 mb-3">Select Service</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="setService('wash', 45)" id="calc-wash" class="calc-btn bg-wave-500 text-white py-3 rounded-xl text-sm font-bold transition-all border-2 border-wave-500">
+                                        Wash & Fold
+                                    </button>
+                                    <button onclick="setService('express', 90)" id="calc-express" class="calc-btn bg-transparent text-slate-300 py-3 rounded-xl text-sm font-bold transition-all border-2 border-slate-600 hover:border-slate-500">
+                                        Express
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-3">
+                                    <label class="text-sm text-slate-400">Weight (kg)</label>
+                                    <span id="calc-weight-display" class="text-wave-400 font-bold">3 kg</span>
+                                </div>
+                                <input type="range" min="1" max="20" value="3" id="calc-slider" class="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-wave-500">
+                                <div class="flex justify-between text-xs text-slate-500 mt-2">
+                                    <span>1kg</span>
+                                    <span>20kg</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                <input type="checkbox" id="delivery-check" class="w-5 h-5 rounded border-slate-600 text-wave-500 focus:ring-wave-500 bg-slate-700" onchange="calculatePrice()">
+                                <label for="delivery-check" class="text-sm text-slate-300 cursor-pointer">
+                                    Include Delivery (+₱50)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <p class="text-slate-400 mb-2">Estimated Total</p>
+                        <div class="text-6xl font-bold text-white mb-2">
+                            ₱<span id="calc-total">135</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mb-8">Tax included • 24-hour service</p>
+                        
+                        <button onclick="openBookingModal()" class="w-full md:w-auto px-8 py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-wave-50 transition-all transform hover:-translate-y-1 shadow-xl">
+                            Book This Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Tracking -->
+    <section id="tracking" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-wave-600 font-semibold tracking-wide uppercase text-sm mb-2">Track Order</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Where's My Laundry?</h3>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-xl p-2 mb-8 max-w-xl mx-auto flex border border-slate-200">
+                <input type="text" id="track-input" placeholder="Enter Order ID (e.g., FW-2024-001)" class="flex-1 px-6 py-4 rounded-2xl outline-none text-slate-700 font-medium bg-transparent">
+                <button onclick="trackOrder()" class="bg-wave-500 hover:bg-wave-600 text-white px-8 py-4 rounded-2xl font-bold transition-colors shadow-lg shadow-wave-500/30">
+                    Track
+                </button>
+            </div>
+
+            <div id="tracking-result" class="hidden bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <p class="text-sm text-slate-500 mb-1">Order ID</p>
+                        <p class="text-2xl font-bold text-slate-900" id="res-id">#FW-2024-001</p>
+                    </div>
+                    <div class="md:text-right">
+                        <p class="text-sm text-slate-500 mb-1">Estimated Ready</p>
+                        <p class="text-2xl font-bold text-wave-600" id="res-date">Today, 4:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="relative mb-8">
+                    <div class="absolute left-0 top-1/2 w-full h-2 bg-slate-100 -translate-y-1/2 rounded-full"></div>
+                    <div class="absolute left-0 top-1/2 h-2 bg-wave-500 -translate-y-1/2 rounded-full transition-all duration-1000" id="progress-fill" style="width: 0%"></div>
+                    
+                    <div class="relative flex justify-between">
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-12 h-12 rounded-full bg-wave-500 text-white flex items-center justify-center z-10 ring-4 ring-white shadow-lg">
+                                <i class="fa-solid fa-box"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-900">Received</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center z-10 ring-4 ring-white transition-all duration-500" id="step-2">
+                                <i class="fa-solid fa-soap"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500" id="text-2">Washing</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center z-10 ring-4 ring-white transition-all duration-500" id="step-3">
+                                <i class="fa-solid fa-wind"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500" id="text-3">Drying</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-12 h-12 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center z-10 ring-4 ring-white transition-all duration-500" id="step-4">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500" id="text-4">Ready</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-wave-50 p-6 rounded-2xl flex items-start gap-4 border border-wave-100">
+                    <div class="w-10 h-10 bg-wave-100 rounded-full flex items-center justify-center text-wave-600 flex-shrink-0">
+                        <i class="fa-solid fa-info"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-1">Status Update</h4>
+                        <p class="text-slate-600 text-sm" id="status-message">Your laundry has been received and is queued for washing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-wave-500 rounded-lg flex items-center justify-center text-white">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-lg block leading-none">Fresh Wave</span>
+                            <span class="text-xs text-slate-400">Laundry Shop</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Your trusted laundry partner in Lumbia, Cagayan de Oro City. Quality service, fresh results.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-wave-500 hover:text-white transition-all">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-wave-500 hover:text-white transition-all">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-wave-500 hover:text-white transition-all">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Services</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Wash & Fold</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Dry Cleaning</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Press & Iron</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Express Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Contact</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-wave-500"></i>
+                            <span>F. Delima St, Lumbia,<br>Cagayan de Oro City, 9000</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-wave-500"></i>
+                            <span>+63 912 345 6789</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-wave-500"></i>
+                            <span>freshwave.lumbia@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Hours</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li class="flex justify-between">
+                            <span>Mon - Sat</span>
+                            <span class="text-white">7:00 AM - 7:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span>
+                            <span class="text-white">8:00 AM - 5:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2024 Fresh Wave Laundry Shop. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-slate-500">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity opacity-0" id="auth-backdrop"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div class="relative w-full max-w-md transform transition-all opacity-0 scale-95" id="auth-panel">
+                    
+                    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                        <!-- Header -->
+                        <div class="bg-gradient-to-r from-wave-500 to-wave-600 p-8 text-center relative">
+                            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors">
+                                <i class="fa-solid fa-xmark text-xl"></i>
+                            </button>
+                            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-white text-3xl mx-auto mb-4 backdrop-blur">
+                                <i class="fa-solid fa-water"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white" id="auth-title">Welcome Back</h3>
+                            <p class="text-wave-100 text-sm mt-1">Fresh Wave Laundry Shop</p>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="flex border-b border-slate-100">
+                            <button onclick="switchAuthTab('login')" id="tab-login" class="flex-1 py-4 text-center font-bold text-wave-600 border-b-2 border-wave-600 bg-wave-50/50">
+                                Login
+                            </button>
+                            <button onclick="switchAuthTab('signup')" id="tab-signup" class="flex-1 py-4 text-center font-bold text-slate-400 hover:text-slate-600 transition-colors">
+                                Sign Up
+                            </button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <div id="login-form" class="p-8 space-y-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <input type="email" id="login-email" placeholder="you@example.com" class="auth-input w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Password</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <input type="password" id="login-password" placeholder="••••••••" class="auth-input w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <label class="flex items-center gap-2 text-slate-600 cursor-pointer">
+                                    <input type="checkbox" class="rounded border-slate-300 text-wave-500 focus:ring-wave-500">
+                                    Remember me
+                                </label>
+                                <a href="#" class="text-wave-600 hover:text-wave-700 font-medium">Forgot?</a>
+                            </div>
+                            <button onclick="login()" class="w-full btn-primary text-white py-4 rounded-xl font-bold shadow-lg shadow-wave-500/30">
+                                Login to Account
+                            </button>
+                        </div>
+
+                        <!-- Signup Form -->
+                        <div id="signup-form" class="hidden p-8 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                                    <input type="text" id="signup-firstname" class="auth-input w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
+                                    <input type="text" id="signup-lastname" class="auth-input w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="signup-email" class="auth-input w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+                                <input type="tel" id="signup-phone" placeholder="+63" class="auth-input w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" id="signup-password" class="auth-input w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-wave-500 focus:ring-2 focus:ring-wave-200 outline-none">
+                            </div>
+                            <div class="flex items-start gap-2 text-sm">
+                                <input type="checkbox" id="terms" class="mt-1 rounded border-slate-300 text-wave-500 focus:ring-wave-500">
+                                <label for="terms" class="text-slate-600">I agree to the <a href="#" class="text-wave-600 hover:underline">Terms</a> and <a href="#" class="text-wave-600 hover:underline">Privacy Policy</a></label>
+                            </div>
+                            <button onclick="signup()" class="w-full btn-primary text-white py-4 rounded-xl font-bold shadow-lg shadow-wave-500/30">
+                                Create Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity opacity-0" id="booking-backdrop"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div class="relative w-full max-w-lg transform transition-all opacity-0 scale-95" id="booking-panel">
+                    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-wave-500 to-wave-600 p-6 flex justify-between items-center">
+                            <h3 class="text-xl font-bold text-white">Schedule Pickup</h3>
+                            <button onclick="closeBookingModal()" class="text-white/70 hover:text-white">
+                                <i class="fa-solid fa-xmark text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="p-6 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                                    <input type="text" id="booking-firstname" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
+                                    <input type="text" id="booking-lastname" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pickup Address</label>
+                                <textarea id="booking-address" rows="2" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none" placeholder="Enter your address in CDO..."></textarea>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+                                    <input type="date" id="booking-date" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Time</label>
+                                    <select id="booking-time" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none">
+                                        <option>7:00 AM - 9:00 AM</option>
+                                        <option>9:00 AM - 11:00 AM</option>
+                                        <option>1:00 PM - 3:00 PM</option>
+                                        <option>3:00 PM - 5:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Service Notes</label>
+                                <textarea id="booking-notes" rows="2" class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:border-wave-500 outline-none" placeholder="Special instructions..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6 pt-0">
+                            <button onclick="submitBooking()" class="w-full btn-primary text-white py-4 rounded-xl font-bold shadow-lg">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl transform translate-y-24 transition-all duration-300 z-[110] flex items-center gap-3 max-w-sm">
+        <div id="toast-icon" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm" id="toast-title">Success</h4>
+            <p class="text-xs text-slate-300" id="toast-message">Operation completed.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- State Management ---
+        let currentUser = null;
+        let currentServiceRate = 45;
+        
+        // --- Navbar Scroll ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+            } else {
+                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+            }
+        });
+
+        // --- Mobile Menu ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- User Dropdown ---
+        function showUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.getElementById('user-menu');
+            const dropdown = document.getElementById('user-dropdown');
+            if (!userMenu.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // --- Auth Modal ---
+        const authModal = document.getElementById('auth-modal');
+        const authBackdrop = document.getElementById('auth-backdrop');
+        const authPanel = document.getElementById('auth-panel');
+
+        function openAuthModal(type) {
+            authModal.classList.remove('hidden');
+            setTimeout(() => {
+                authBackdrop.classList.remove('opacity-0');
+                authPanel.classList.remove('opacity-0', 'scale-95');
+                authPanel.classList.add('opacity-100', 'scale-100');
+            }, 10);
+            switchAuthTab(type);
+        }
+
+        function closeAuthModal() {
+            authBackdrop.classList.add('opacity-0');
+            authPanel.classList.remove('opacity-100', 'scale-100');
+            authPanel.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => authModal.classList.add('hidden'), 300);
+        }
+
+        function switchAuthTab(type) {
+            const loginTab = document.getElementById('tab-login');
+            const signupTab = document.getElementById('tab-signup');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const title = document.getElementById('auth-title');
+
+            if (type === 'login') {
+                loginTab.className = 'flex-1 py-4 text-center font-bold text-wave-600 border-b-2 border-wave-600 bg-wave-50/50';
+                signupTab.className = 'flex-1 py-4 text-center font-bold text-slate-400 hover:text-slate-600 transition-colors';
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                title.textContent = 'Welcome Back';
+            } else {
+                signupTab.className = 'flex-1 py-4 text-center font-bold text-wave-600 border-b-2 border-wave-600 bg-wave-50/50';
+                loginTab.className = 'flex-1 py-4 text-center font-bold text-slate-400 hover:text-slate-600 transition-colors';
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                title.textContent = 'Create Account';
+            }
+        }
+
+        // --- Authentication ---
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Simulate login
+            currentUser = {
+                email: email,
+                firstName: email.split('@')[0],
+                lastName: 'User'
+            };
+            
+            updateUIForUser();
+            closeAuthModal();
+            showToast('Welcome back! You are now logged in.');
+        }
+
+        function signup() {
+            const firstName = document.getElementById('signup-firstname').value;
+            const lastName = document.getElementById('signup-lastname').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!firstName || !lastName || !email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!terms) {
+                showToast('Please accept the terms and conditions', 'error');
+                return;
+            }
+            
+            currentUser = { email, firstName, lastName };
+            updateUIForUser();
+            closeAuthModal();
+            showToast('Account created successfully! Welcome to Fresh Wave.');
+        }
+
+        function logout() {
+            currentUser = null;
+            updateUIForUser();
+            showToast('You have been logged out.');
+            document.getElementById('user-dropdown').classList.add('hidden');
+        }
+
+        function updateUIForUser() {
+            const authButtons = document.getElementById('auth-buttons');
+            const userMenu = document.getElementById('user-menu');
+            const mobileAuth = document.getElementById('mobile-auth-section');
+            const mobileUser = document.getElementById('mobile-user-section');
+            const mobileAvatar = document.getElementById('mobile-user-avatar-container');
+
+            if (currentUser) {
+                // Desktop
+                authButtons.classList.add('hidden');
+                userMenu.classList.remove('hidden');
+                userMenu.classList.add('flex');
+                
+                // Mobile
+                mobileAuth.classList.add('hidden');
+                mobileUser.classList.remove('hidden');
+                mobileAvatar.classList.remove('hidden');
+                mobileAvatar.classList.add('block');
+                
+                // Update info
+                const initials = currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0);
+                const fullName = `${currentUser.firstName} ${currentUser.lastName}`;
+                
+                document.getElementById('user-name').textContent = fullName;
+                document.getElementById('user-avatar').textContent = initials;
+                document.getElementById('dropdown-name').textContent = fullName;
+                document.getElementById('dropdown-email').textContent = currentUser.email;
+                
+                document.getElementById('mobile-user-avatar').textContent = initials;
+                document.getElementById('mobile-menu-name').textContent = fullName;
+                document.getElementById('mobile-menu-email').textContent = currentUser.email;
+                
+                // Pre-fill booking
+                document.getElementById('booking-firstname').value = currentUser.firstName;
+                document.getElementById('booking-lastname').value = currentUser.lastName;
+            } else {
+                // Desktop
+                authButtons.classList.remove('hidden');
+                userMenu.classList.add('hidden');
+                userMenu.classList.remove('flex');
+                
+                // Mobile
+                mobileAuth.classList.remove('hidden');
+                mobileUser.classList.add('hidden');
+                mobileAvatar.classList.add('hidden');
+                mobileAvatar.classList.remove('block');
+                
+                // Clear booking
+                document.getElementById('booking-firstname').value = '';
+                document.getElementById('booking-lastname').value = '';
+            }
+        }
+
+        // --- Booking Modal ---
+        const bookingModal = document.getElementById('booking-modal');
+        const bookingBackdrop = document.getElementById('booking-backdrop');
+        const bookingPanel = document.getElementById('booking-panel');
+
+        function openBookingModal() {
+            if (!currentUser) {
+                openAuthModal('login');
+                showToast('Please login to book a service', 'error');
+                return;
+            }
+            bookingModal.classList.remove('hidden');
+            setTimeout(() => {
+                bookingBackdrop.classList.remove('opacity-0');
+                bookingPanel.classList.remove('opacity-0', 'scale-95');
+                bookingPanel.classList.add('opacity-100', 'scale-100');
+            }, 10);
+        }
+
+        function closeBookingModal() {
+            bookingBackdrop.classList.add('opacity-0');
+            bookingPanel.classList.remove('opacity-100', 'scale-100');
+            bookingPanel.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => bookingModal.classList.add('hidden'), 300);
+        }
+
+        function submitBooking() {
+            const address = document.getElementById('booking-address').value;
+            const date = document.getElementById('booking-date').value;
+            
+            if (!address || !date) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            closeBookingModal();
+            const orderId = 'FW-' + new Date().getFullYear() + '-' + Math.floor(100 + Math.random() * 900);
+            showToast(`Booking confirmed! Order ID: ${orderId}`);
+            
+            setTimeout(() => {
+                document.getElementById('track-input').value = orderId;
+                trackOrder();
+                document.getElementById('tracking').scrollIntoView({behavior: 'smooth'});
+            }, 1500);
+        }
+
+        // --- Price Calculator ---
+        function setService(type, rate) {
+            currentServiceRate = rate;
+            
+            document.querySelectorAll('.calc-btn').forEach(btn => {
+                btn.classList.remove('bg-wave-500', 'text-white', 'border-wave-500');
+                btn.classList.add('bg-transparent', 'text-slate-300', 'border-slate-600');
+            });
+            
+            const activeBtn = document.getElementById(`calc-${type}`);
+            activeBtn.classList.remove('bg-transparent', 'text-slate-300', 'border-slate-600');
+            activeBtn.classList.add('bg-wave-500', 'text-white', 'border-wave-500');
+            
+            calculatePrice();
+        }
+
+        document.getElementById('calc-slider').addEventListener('input', (e) => {
+            document.getElementById('calc-weight-display').textContent = e.target.value + ' kg';
+            calculatePrice();
+        });
+
+        function calculatePrice() {
+            const weight = parseInt(document.getElementById('calc-slider').value);
+            const delivery = document.getElementById('delivery-check').checked;
+            let total = weight * currentServiceRate;
+            if (delivery) total += 50;
+            document.getElementById('calc-total').textContent = total;
+        }
+
+        function selectService(service) {
+            if (service === 'wash') setService('wash', 45);
+            if (service === 'express') setService('express', 90);
+            document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // --- Tracking ---
+        function trackOrder() {
+            const input = document.getElementById('track-input').value;
+            const result = document.getElementById('tracking-result');
+            
+            if (!input) {
+                showToast('Please enter an Order ID', 'error');
+                return;
+            }
+            
+            result.classList.remove('hidden');
+            
+            // Reset
+            document.getElementById('progress-fill').style.width = '0%';
+            [2, 3, 4].forEach(i => {
+                document.getElementById(`step-${i}`).className = 'w-12 h-12 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center z-10 ring-4 ring-white transition-all duration-500';
+                document.getElementById(`text-${i}`).className = 'text-xs font-medium text-slate-500';
+            });
+            
+            // Animate
+            setTimeout(() => {
+                const scenarios = [
+                    { width: '10%', step: 1, msg: 'Your laundry has been received and is queued for processing.' },
+                    { width: '40%', step: 2, msg: 'Your clothes are currently being washed with premium detergent.' },
+                    { width: '70%', step: 3, msg: 'Drying and folding in progress. Almost ready!' },
+                    { width: '100%', step: 4, msg: 'Your laundry is ready for pickup/delivery!' }
+                ];
+                
+                const random = scenarios[Math.floor(Math.random() * scenarios.length)];
+                
+                document.getElementById('progress-fill').style.width = random.width;
+                document.getElementById('status-message').textContent = random.msg;
+                document.getElementById('res-id').textContent = '#' + input;
+                
+                for (let i = 2; i <= random.step; i++) {
+                    document.getElementById(`step-${i}`).className = 'w-12 h-12 rounded-full bg-wave-500 text-white flex items-center justify-center z-10 ring-4 ring-white shadow-lg transition-all duration-500';
+                    document.getElementById(`text-${i}`).className = 'text-xs font-bold text-wave-600';
+                }
+            }, 500);
+        }
+
+        // --- Toast ---
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const title = document.getElementById('toast-title');
+            
+            document.getElementById('toast-message').textContent = message;
+            
+            if (type === 'error') {
+                icon.className = 'w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0';
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                title.textContent = 'Error';
+                title.className = 'font-bold text-sm text-red-400';
+            } else {
+                icon.className = 'w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0';
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                title.textContent = 'Success';
+                title.className = 'font-bold text-sm text-green-400';
+            }
+            
+            toast.classList.remove('translate-y-24');
+            setTimeout(() => toast.classList.add('translate-y-24'), 4000);
+        }
+
+        // --- GSAP Animations ---
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.service-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: 'top 85%' },
+                y: 50,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.1
+            });
+        });
+
+        // Close modals on backdrop click
+        authBackdrop.addEventListener('click', closeAuthModal);
+        bookingBackdrop.addEventListener('click', closeBookingModal);
+
+    </script>
+</body>
+</html>
